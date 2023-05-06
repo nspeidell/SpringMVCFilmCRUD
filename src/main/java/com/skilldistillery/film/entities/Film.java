@@ -59,8 +59,7 @@ public class Film {
 		return "\nTitle: " + title + "\nCategory: " + category + "\nDescription: " + desc + "\nRelease Year: "
 				+ releaseYear + "\nRating: " + rating + "\nLanguage: " + language + "\nLength: " + length + " minutes"
 				+ "\nFilm ID: " + filmId + "\nRental Duration: " + rentDur + " days" + "\nRental Rate: $" + rate
-				+ "\nReplacement Cost: $" + repCost + "\nFeatures: " + features + "\n" + displayCast() + "\n"
-				+ displayInventory();
+				+ "\nReplacement Cost: $" + repCost + "\nFeatures: " + features;
 	}
 
 	public String displayCast() {

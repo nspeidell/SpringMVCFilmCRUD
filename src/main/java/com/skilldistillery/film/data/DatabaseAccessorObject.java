@@ -283,18 +283,18 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public boolean deleteFilm(Film film) {
+	public boolean deleteFilm(int filmId) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			conn.setAutoCommit(false); // START TRANSACTION
 			String sql = "DELETE FROM film_actor WHERE film_id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, film.getFilmId());
+			stmt.setInt(1, filmId);
 			int updateCount = stmt.executeUpdate();
 			sql = "DELETE FROM film WHERE id = ?";
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, film.getFilmId());
+			stmt.setInt(1, filmId);
 			updateCount = stmt.executeUpdate();
 			conn.commit(); // COMMIT TRANSACTION
 			stmt.close();
@@ -320,10 +320,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	public boolean updateFilm(int filmId, Film userEditedFilm) {
 		Connection conn = null;
 		try {
+			System.out.println(userEditedFilm.displayFullDetails());
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			conn.setAutoCommit(false); // START TRANSACTION
 			String sql = "UPDATE film SET title=?, description=?, release_year=?, rental_duration=?, "
-					+ "rental_rate=?, length=?, replacement_cost=?, rating=?, special_features=? " + " WHERE id=?";
+					+ "rental_rate=?, length=?, replacement_cost=?, rating=? " + "WHERE id=?";
 			Film existingFilm = findFilmById(filmId);
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			if (userEditedFilm.getTitle() != null && !userEditedFilm.getTitle().equals("")) {
@@ -374,14 +375,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			else {
 				stmt.setString(8, existingFilm.getRating());
 			}
-			if (userEditedFilm.getFeatures() != null && !userEditedFilm.getFeatures().equals("")) {
-				stmt.setString(9, userEditedFilm.getFeatures());
-			}
-			else {
-				stmt.setString(9, existingFilm.getFeatures());
-			}
-			stmt.setInt(10, filmId);
-//			int updateCount = stmt.executeUpdate();
+			stmt.setInt(9, filmId);
+			stmt.executeUpdate();
 //			if (updateCount == 1) {
 //				// Replace film's cast
 //				sql = "DELETE FROM film_actor WHERE film_id = ?";
