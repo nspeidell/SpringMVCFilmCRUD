@@ -14,7 +14,7 @@ public interface DatabaseAccessor {
 	Film findFilmById(int filmId);	
 	Film createFilm(Film film);
 	boolean deleteFilm(Film film);
-	boolean saveFilm(Film film);
+	boolean updateFilm(int filmId, Film film);
 
 	List<Actor> findActorsByFilmId(int filmId);
 	

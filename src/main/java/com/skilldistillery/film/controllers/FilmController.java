@@ -36,11 +36,12 @@ public ModelAndView editFilmForm(int id) {
 	
 	@RequestMapping(path = {"SubmitEditFilm.do"}, params = "filmId", method= RequestMethod.POST)
 	public ModelAndView film(ModelAndView model, Film film, int filmId, RedirectAttributes redir) {
-	film.setFilmId(filmId);
-		boolean updated = dao.saveFilm(film);
+//		film.setFilmId(filmId);
+		Film userEditedFilm = film;
+		boolean updated = dao.updateFilm(filmId, userEditedFilm);
 		model.addObject("updated", updated);
 		model.setViewName("updateResult");
-		redir.addFlashAttribute("redirFilm", film);
+		redir.addFlashAttribute("redirFilm");
 		model.setViewName ("redirect:updateFilm.do");
 		return model;
 	}

@@ -317,47 +317,91 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	
 	@Override
-	public boolean saveFilm(Film film) {
+	public boolean updateFilm(int filmId, Film userEditedFilm) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			conn.setAutoCommit(false); // START TRANSACTION
-			String sql = "UPDATE film SET title=?, description=?, release_year=?, language_id=?, rental_duration=?, "
+			String sql = "UPDATE film SET title=?, description=?, release_year=?, rental_duration=?, "
 					+ "rental_rate=?, length=?, replacement_cost=?, rating=?, special_features=? " + " WHERE id=?";
-			int filmId = film.getFilmId();
+			Film existingFilm = findFilmById(filmId);
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, film.getTitle());
-			stmt.setString(2, film.getDesc());
-			stmt.setInt(3, film.getReleaseYear());
-			stmt.setInt(4, 1);
-			stmt.setInt(5, film.getRentDur());
-			stmt.setDouble(6, film.getRate());
-			stmt.setInt(7, film.getLength());
-			stmt.setDouble(8, film.getRepCost());
-			stmt.setString(9, film.getRating());
-			stmt.setString(10, film.getFeatures());
-			stmt.setInt(11, filmId);
-			int updateCount = stmt.executeUpdate();
-			if (updateCount == 1) {
-				// Replace film's cast
-				sql = "DELETE FROM film_actor WHERE film_id = ?";
-				stmt = conn.prepareStatement(sql);
-				stmt.setInt(1, filmId);
-				updateCount = stmt.executeUpdate();
-				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
-				stmt = conn.prepareStatement(sql);
-				if (film.getCast() != null && film.getCast().size() > 0) {
-				for (Actor actor : film.getCast()) {
-					stmt.setInt(1, filmId);
-					stmt.setInt(2, actor.getId());
-					updateCount = stmt.executeUpdate();
-				} }
+			if (userEditedFilm.getTitle() != null && !userEditedFilm.getTitle().equals("")) {
+				stmt.setString(1, userEditedFilm.getTitle());
+			}
+			else {
+				stmt.setString(1, existingFilm.getTitle());
+			}
+			if (userEditedFilm.getDesc() != null && !userEditedFilm.getDesc().equals("")) {
+				stmt.setString(2, userEditedFilm.getDesc());
+			}
+			else {
+				stmt.setString(2, existingFilm.getDesc());
+			}
+			if (userEditedFilm.getReleaseYear() != 0) {
+				stmt.setInt(3, userEditedFilm.getReleaseYear());
+			}
+			else {
+				stmt.setInt(3, existingFilm.getReleaseYear());
+			}
+			if (userEditedFilm.getRentDur() != 0) {
+				stmt.setInt(4, userEditedFilm.getRentDur());
+			}
+			else {
+				stmt.setInt(4, existingFilm.getRentDur());
+			}
+			if (userEditedFilm.getRate() != 0) {
+				stmt.setDouble(5, userEditedFilm.getRate());
+			}
+			else {
+				stmt.setDouble(5, existingFilm.getRate());
+			}
+			if (userEditedFilm.getLength() != 0) {
+				stmt.setInt(6, userEditedFilm.getLength());
+			}
+			else {
+				stmt.setInt(6, existingFilm.getLength());
+			}
+			if (userEditedFilm.getRepCost() != 0) {
+				stmt.setDouble(7, userEditedFilm.getRepCost());
+			}
+			else {
+				stmt.setDouble(7, existingFilm.getRepCost());
+			}
+			if (userEditedFilm.getRating() != null && !userEditedFilm.getRating().equals("")) {
+				stmt.setString(8, userEditedFilm.getRating());
+			}
+			else {
+				stmt.setString(8, existingFilm.getRating());
+			}
+			if (userEditedFilm.getFeatures() != null && !userEditedFilm.getFeatures().equals("")) {
+				stmt.setString(9, userEditedFilm.getFeatures());
+			}
+			else {
+				stmt.setString(9, existingFilm.getFeatures());
+			}
+			stmt.setInt(10, filmId);
+//			int updateCount = stmt.executeUpdate();
+//			if (updateCount == 1) {
+//				// Replace film's cast
+//				sql = "DELETE FROM film_actor WHERE film_id = ?";
+//				stmt = conn.prepareStatement(sql);
+//				stmt.setInt(1, filmId);
+//				updateCount = stmt.executeUpdate();
+//				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
+//				stmt = conn.prepareStatement(sql);
+//				if (film.getCast() != null && film.getCast().size() > 0) {
+//				for (Actor actor : film.getCast()) {
+//					stmt.setInt(1, filmId);
+//					stmt.setInt(2, actor.getId());
+//					updateCount = stmt.executeUpdate();
+//				} }
 				conn.commit(); // COMMIT TRANSACTION
 				stmt.close();
 				if (!conn.isClosed()) {
 					conn.close();
 				}
-			}
+			
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
