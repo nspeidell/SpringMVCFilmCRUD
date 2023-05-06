@@ -336,6 +336,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			stmt.setDouble(8, film.getRepCost());
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, film.getFeatures());
+			stmt.setInt(11, filmId);
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
 				// Replace film's cast
@@ -345,11 +346,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				updateCount = stmt.executeUpdate();
 				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
 				stmt = conn.prepareStatement(sql);
+				if (film.getCast() != null && film.getCast().size() > 0) {
 				for (Actor actor : film.getCast()) {
 					stmt.setInt(1, filmId);
 					stmt.setInt(2, actor.getId());
 					updateCount = stmt.executeUpdate();
-				}
+				} }
 				conn.commit(); // COMMIT TRANSACTION
 				stmt.close();
 				if (!conn.isClosed()) {

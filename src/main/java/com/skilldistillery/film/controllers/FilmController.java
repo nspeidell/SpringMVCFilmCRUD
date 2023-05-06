@@ -1,5 +1,6 @@
 package com.skilldistillery.film.controllers;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.film.data.DatabaseAccessor;
 import com.skilldistillery.film.entities.Film;
@@ -20,9 +23,34 @@ public class FilmController {
 	
 	@RequestMapping(path = {"/", "home.do"})
 	public String home(Model model) {
-		return "home";
+		return "home";	
+	}
+	@RequestMapping(path = {"editFilmForm.do"}, method= RequestMethod.GET)
+public ModelAndView editFilmForm(int id) {
+		Film film = dao.findFilmById(id);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("film", film);
+		mv.setViewName ("editFilm");		
+	return mv;
+}
+	
+	@RequestMapping(path = {"SubmitEditFilm.do"}, params = "filmId", method= RequestMethod.POST)
+	public ModelAndView film(ModelAndView model, Film film, int filmId, RedirectAttributes redir) {
+	film.setFilmId(filmId);
+		boolean updated = dao.saveFilm(film);
+		model.addObject("updated", updated);
+		model.setViewName("updateResult");
+		redir.addFlashAttribute("redirFilm", film);
+		model.setViewName ("redirect:updateFilm.do");
+		return model;
 	}
 	//list all films
+	@RequestMapping(path = {"updateFilm.do"}, method= RequestMethod.GET)
+	public ModelAndView editFormRoute() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("updateResult");
+		return mv;
+	}
 	
 	@RequestMapping(path = "GetFilmData.do", params = "idLookup", method = RequestMethod.GET)
 	public ModelAndView findFilmById(int idLookup) {
@@ -51,12 +79,12 @@ public class FilmController {
 		return mv;
 	}
 	
-	@RequestMapping(path = "EditFilm.do", method = RequestMethod.POST)
-	public ModelAndView saveFilm(Film film) {
-		ModelAndView mv = new ModelAndView();
-		boolean updated = dao.saveFilm(film);
-		mv.addObject("updated", updated);
-		mv.setViewName("updateResult");
-		return mv;
-	}
+//	@RequestMapping(path = "SubmitEditFilm.do", method = RequestMethod.POST)
+//	public ModelAndView saveFilm(Film film) {
+//		ModelAndView mv = new ModelAndView();
+//		boolean updated = dao.saveFilm(film);
+//		mv.addObject("updated", updated);
+//		mv.setViewName("updateResult");
+//		return mv;
+//	}
 }

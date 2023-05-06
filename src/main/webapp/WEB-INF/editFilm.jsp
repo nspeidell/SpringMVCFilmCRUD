@@ -9,7 +9,7 @@
 <title>Edit Film</title>
 </head>
 <body>
-  <form action="EditFilm.do" method="POST">
+  <form action="SubmitEditFilm.do?filmId=${film.filmId}" method="POST">
     <label for="title">Title:</label>
     <input type="text" name="title" value="${film.title }">
     <br>
