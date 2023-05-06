@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Film</title>
+</head>
+<body>
+  <form action="NewFilm.do" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" name="title" value="">
+    <br>
+    <label for="desc">Description:</label>
+    <input type="text" name="desc" value="">
+    <br>
+    <label for="releaseYear">Release Year:</label>
+    <input type="number" min="1800" max="2050" name="releaseYear" value="">
+    <br>
+    <label for="length">Film Length:</label>
+    <input type="number" min="0" name="length" value="">
+    <label for="length">minutes</label>
+    <br>
+    <label for="rentDur">Rental Duration:</label>
+    <input type="number" min="0" name="rentDur" value="">
+    <label for="rentDur">days</label>
+    <br>
+    <label for="rate">Rental Rate: $</label>
+    <input type="number" name="rate">
+    <br>
+    <label for="repCost">Replacement Cost: $</label>
+    <input type="number" name="repCost">
+    <br>
+    <div>
+      <label for="rating">Film Rating:</label>
+      <input type="radio" id="G" name="rating" value="G">
+      <label for="G">G</label>
+      <input type="radio" id="PG" name="rating" value="PG">
+      <label for="PG">PG</label>
+      <input type="radio" id="PG-13" name="rating" value="PG-13">
+      <label for="PG-13">PG-13</label>
+      <input type="radio" id="R" name="rating" value="R">
+      <label for="R">R</label>
+      <input type="radio" id="NC-17" name="rating" value="NC-17">
+      <label for="NC-17">NC-17</label><br>
+    </div>
+    <input type="submit" value="Add Film">
+  </form>
+</body>
+</html>

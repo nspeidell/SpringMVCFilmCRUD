@@ -7,12 +7,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Home</title>
+<title>Edit Results</title>
 </head>
 <body>
-<h1>Film Database Home</h1>
-<a href="idForm.html">Lookup film by ID</a><br/>
-<a href="keywordForm.html">Lookup film by keyword</a><br/>
-<a href="newFilm.html">Add a Film</a><br/>
+<c:choose>
+<c:when test="${updated } = true">
+	<p>Film edit successful</p>
+</c:when>
+<c:otherwise>
+	<p>Film edit unsuccessful</p>
+</c:otherwise>
+</c:choose>
 </body>
 </html>
