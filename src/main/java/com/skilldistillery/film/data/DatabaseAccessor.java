@@ -2,23 +2,29 @@ package com.skilldistillery.film.data;
 
 import java.util.List;
 
-import com.skilldistillery.film.entities.Actor;
-import com.skilldistillery.film.entities.Film;
+import com.skilldistillery.film.entities.*;
 
 public interface DatabaseAccessor {
-	Film findFilmById(int filmId);
-
-	List<Actor> findActorsByFilmId(int filmId);
-
+	
 	Actor findActorById(int actorId);
-
-	List<Film> findFilmByKeyword(String filmKeyword);
-	Actor createActor( Actor actor);
+	Actor createActor(Actor actor);	
 	boolean saveActor(Actor actor);
 	boolean deleteActor(Actor actor);
 	
+	Film findFilmById(int filmId);	
 	Film createFilm(Film film);
-	Film updateFilm(int filmId, Film film);
-	boolean deleteFilm(int filmId);
+	boolean deleteFilm(Film film);
+	boolean saveFilm(Film film);
+
+	List<Actor> findActorsByFilmId(int filmId);
 	
+	List<Film> findFilmsByActorId(int actorId);
+	List<Film> findFilmsByKeyword(String keyword);
+
+	List<InventoryItem> findInventoryByFilmId(int filmId);
+
+	String convertLanguage(int langId);
+
+	String findCategory(int filmId);
+
 }

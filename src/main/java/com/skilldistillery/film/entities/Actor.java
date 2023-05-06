@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.skilldistillery.film.entities.*;
+
 public class Actor {
 	private int id;
 	private String firstName;
 	private String lastName;
 	private List<Film> films;
 
-	// methods
 	public Actor() {
+	}
+
+	public Actor(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
 	}
 
 	public Actor(int id, String firstName, String lastName) {
@@ -20,11 +26,10 @@ public class Actor {
 		this.lastName = lastName;
 	}
 
-	public Actor(String firstName, String lastName) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public String displayNameOnly() {
+		return firstName + " " + lastName;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -48,21 +53,22 @@ public class Actor {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
- public List<Film> getFilms() {
-	 List<Film> copy = new ArrayList<>(films);
-	 return copy;
- }
- public void setFilms(List<Film> films) {
-	 this.films = films;
- }
-	@Override
-	public String toString() {
-		return "Actor [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+
+	public List<Film> getFilms() {
+		List<Film> filmsCopy = null;
+		if (films != null) {
+			new ArrayList<>(films);
+		}
+		return filmsCopy;
+	}
+
+	public void setFilms(List<Film> films) {
+		this.films = films;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(firstName, id, lastName);
+		return Objects.hash(films, firstName, id, lastName);
 	}
 
 	@Override
@@ -74,7 +80,12 @@ public class Actor {
 		if (getClass() != obj.getClass())
 			return false;
 		Actor other = (Actor) obj;
-		return Objects.equals(firstName, other.firstName) && id == other.id && Objects.equals(lastName, other.lastName);
+		return Objects.equals(films, other.films) && Objects.equals(firstName, other.firstName) && id == other.id
+				&& Objects.equals(lastName, other.lastName);
 	}
 
+	@Override
+	public String toString() {
+		return "Actor ID: " + id + ", Name: " + firstName + " " + lastName;
+	}
 }
