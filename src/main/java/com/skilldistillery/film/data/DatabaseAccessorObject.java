@@ -16,7 +16,7 @@ import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 import com.skilldistillery.film.entities.InventoryItem;
 
-@Component 
+@Component
 public class DatabaseAccessorObject implements DatabaseAccessor {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=US/Mountain";
@@ -30,7 +30,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public Actor findActorById(int actorId) {
 		Actor actor = null;
@@ -222,7 +222,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return film;
 	}
-	
+
 	@Override
 	public Film createFilm(Film film) {
 		Connection conn = null;
@@ -230,8 +230,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			conn.setAutoCommit(false); // START TRANSACTION
 			String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration, "
-					+ "rental_rate, length, replacement_cost, rating) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?)";
+					+ "rental_rate, length, replacement_cost, rating) " + "VALUES (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDesc());
@@ -315,109 +314,50 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		return true;
 	}
-	
+
 	@Override
-	public boolean updateFilm(int filmId, Film userEditedFilm) {
+	public boolean updateFilm(int filmId, Film film) {
 		Connection conn = null;
 		try {
+			System.out.println(filmId);
+			System.out.println(film);
 			conn = DriverManager.getConnection(URL, USER, PWD);
 			conn.setAutoCommit(false); // START TRANSACTION
-			String sql = "UPDATE film SET title=?, description=?, release_year=?, rental_duration=?, "
-					+ "rental_rate=?, length=?, replacement_cost=?, rating=?, special_features=? " + " WHERE id=?";
-			Film existingFilm = findFilmById(filmId);
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			if (userEditedFilm.getTitle() != null && !userEditedFilm.getTitle().equals("")) {
-				stmt.setString(1, userEditedFilm.getTitle());
-			}
-			else {
-				stmt.setString(1, existingFilm.getTitle());
-			}
-			if (userEditedFilm.getDesc() != null && !userEditedFilm.getDesc().equals("")) {
-				stmt.setString(2, userEditedFilm.getDesc());
-			}
-			else {
-				stmt.setString(2, existingFilm.getDesc());
-			}
-			if (userEditedFilm.getReleaseYear() != 0) {
-				stmt.setInt(3, userEditedFilm.getReleaseYear());
-			}
-			else {
-				stmt.setInt(3, existingFilm.getReleaseYear());
-			}
-			if (userEditedFilm.getRentDur() != 0) {
-				stmt.setInt(4, userEditedFilm.getRentDur());
-			}
-			else {
-				stmt.setInt(4, existingFilm.getRentDur());
-			}
-			if (userEditedFilm.getRate() != 0) {
-				stmt.setDouble(5, userEditedFilm.getRate());
-			}
-			else {
-				stmt.setDouble(5, existingFilm.getRate());
-			}
-			if (userEditedFilm.getLength() != 0) {
-				stmt.setInt(6, userEditedFilm.getLength());
-			}
-			else {
-				stmt.setInt(6, existingFilm.getLength());
-			}
-			if (userEditedFilm.getRepCost() != 0) {
-				stmt.setDouble(7, userEditedFilm.getRepCost());
-			}
-			else {
-				stmt.setDouble(7, existingFilm.getRepCost());
-			}
-			if (userEditedFilm.getRating() != null && !userEditedFilm.getRating().equals("")) {
-				stmt.setString(8, userEditedFilm.getRating());
-			}
-			else {
-				stmt.setString(8, existingFilm.getRating());
-			}
-			if (userEditedFilm.getFeatures() != null && !userEditedFilm.getFeatures().equals("")) {
-				stmt.setString(9, userEditedFilm.getFeatures());
-			}
-			else {
-				stmt.setString(9, existingFilm.getFeatures());
-			}
-			stmt.setInt(10, filmId);
-//			int updateCount = stmt.executeUpdate();
-//			if (updateCount == 1) {
-//				// Replace film's cast
-//				sql = "DELETE FROM film_actor WHERE film_id = ?";
-//				stmt = conn.prepareStatement(sql);
-//				stmt.setInt(1, filmId);
-//				updateCount = stmt.executeUpdate();
-//				sql = "INSERT INTO film_actor (film_id, actor_id) VALUES (?,?)";
-//				stmt = conn.prepareStatement(sql);
-//				if (film.getCast() != null && film.getCast().size() > 0) {
-//				for (Actor actor : film.getCast()) {
-//					stmt.setInt(1, filmId);
-//					stmt.setInt(2, actor.getId());
-//					updateCount = stmt.executeUpdate();
-//				} }
-				conn.commit(); // COMMIT TRANSACTION
-				stmt.close();
-				if (!conn.isClosed()) {
-					conn.close();
-				}
+			String sql = "UPDATE film SET title = ?, description = ?, release_year = ?, rating = ?, length= ? WHERE id=?";
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1,  film.getTitle());
+			stmt.setString(2,  film.getDesc());
+			stmt.setInt(3,  film.getReleaseYear());
+			stmt.setString(4,  film.getRating());
+			stmt.setInt(5,  film.getLength());
+			stmt.setInt(6,  filmId);
+			System.out.println(film);
 			
+			int updateCount = stmt.executeUpdate();
+			conn.commit(); // COMMIT TRANSACTION
+			System.out.println("commit");
+			stmt.close();
+			if (!conn.isClosed()) {
+				conn.close();
+			}
+			
+			System.out.println("what is this");
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			if (conn != null) {
 				try {
 					conn.rollback();
 					conn.close();
+					System.out.println("rollback");
 				} // ROLLBACK TRANSACTION ON ERROR
 				catch (SQLException sqle2) {
 					System.err.println("Error trying to rollback");
 				}
-			}
-			return false;
-		}
-		return true;
+				System.out.println("false");
+			} return false;
+			
+		} return true;
 	}
-
 
 	@Override
 	public List<Actor> findActorsByFilmId(int filmId) {

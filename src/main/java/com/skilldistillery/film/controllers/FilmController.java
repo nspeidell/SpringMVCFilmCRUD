@@ -39,6 +39,7 @@ public ModelAndView editFilmForm(int id) {
 //		film.setFilmId(filmId);
 		Film userEditedFilm = film;
 		boolean updated = dao.updateFilm(filmId, userEditedFilm);
+		System.out.println(updated);
 		model.addObject("updated", updated);
 		model.setViewName("updateResult");
 		redir.addFlashAttribute("redirFilm");
