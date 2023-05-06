@@ -7,15 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Edit Results</title>
+<title>Deletion Results</title>
 </head>
 <body>
 <c:choose>
-<c:when test="${updated = true }">
-	<p>Film edit successful</p>
+<c:when test="${updated } = true">
+	<p>Film deletion successful</p>
 </c:when>
 <c:otherwise>
-	<p>Film edit unsuccessful</p>
+	<p>Film deletion unsuccessful</p>
 </c:otherwise>
 </c:choose>
 </body>

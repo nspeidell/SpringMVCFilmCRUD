@@ -25,8 +25,8 @@
 					<li>${film.features}</li>
 					<li>${film.category}</li>
 				</ul>
-				<a href="editFilm.jsp">Edit Film Details</a>
-				<a href="deleteFilm.jsp">Delete Film</a>
+				<a href="editFilmForm.do?id=${film.filmId}">Edit Film Details</a>
+				<a href="deleteFilm.do?id=${film.filmId}">Delete Film</a>
 				<br>
 			</c:forEach>
 		</c:when>

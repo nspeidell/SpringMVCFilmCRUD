@@ -47,7 +47,7 @@
       <input type="radio" id="NC-17" name="rating" value="NC-17">
       <label for="NC-17">NC-17</label><br>
     </div>
-    <input type="submit" value="Add Film">
+    <input type="submit" value="Edit Film">
   </form>
 </body>
 </html>

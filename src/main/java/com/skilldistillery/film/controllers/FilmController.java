@@ -35,14 +35,14 @@ public ModelAndView editFilmForm(int id) {
 }
 	
 	@RequestMapping(path = {"SubmitEditFilm.do"}, params = "filmId", method= RequestMethod.POST)
-	public ModelAndView film(ModelAndView model, Film film, int filmId, RedirectAttributes redir) {
+	public ModelAndView editFilm(ModelAndView model, Film film, int filmId, RedirectAttributes redir) {
 //		film.setFilmId(filmId);
 		Film userEditedFilm = film;
 		boolean updated = dao.updateFilm(filmId, userEditedFilm);
 		System.out.println(updated);
 		model.addObject("updated", updated);
 		model.setViewName("updateResult");
-		redir.addFlashAttribute("redirFilm");
+		redir.addFlashAttribute("updated", updated);
 		model.setViewName ("redirect:updateFilm.do");
 		return model;
 	}
@@ -51,6 +51,24 @@ public ModelAndView editFilmForm(int id) {
 	public ModelAndView editFormRoute() {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("updateResult");
+		return mv;
+	}
+	
+	@RequestMapping(path = {"deleteFilm.do"}, params = "filmId", method= RequestMethod.POST)
+	public ModelAndView deleteFilm(ModelAndView model, int filmId, RedirectAttributes redir) {
+
+		boolean deleted = dao.deleteFilm(filmId);
+		model.addObject("deleted", deleted);
+		model.setViewName("deleteResult");
+		redir.addFlashAttribute("deleted", deleted);
+		model.setViewName ("redirect:deletingFilm.do");
+		return model;
+	}
+	//list all films
+	@RequestMapping(path = {"deletingFilm.do"}, method= RequestMethod.GET)
+	public ModelAndView deleteRoute() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("deleteResult");
 		return mv;
 	}
 	
