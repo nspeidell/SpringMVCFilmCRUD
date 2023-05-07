@@ -10,24 +10,24 @@
     <input type="text" name="title" required>
     <br>
     <label for="desc">Description:</label>
-    <input type="text" name="desc">
+    <input type="text" name="desc" required>
     <br>
     <label for="releaseYear">Release Year:</label>
-    <input type="number" min="1800" max="2050" name="releaseYear">
+    <input type="number" min="1800" max="2050" name="releaseYear" required>
     <br>
     <label for="length">Film Length:</label>
-    <input type="number" min="0" name="length">
+    <input type="number" min="0" max="1000" name="length" required>
     <label for="length">minutes</label>
     <br>
     <label for="rentDur">Rental Duration:</label>
-    <input type="number" min="0" name="rentDur">
+    <input type="number" min="0" max="999" name="rentDur" required>
     <label for="rentDur">days</label>
     <br>
     <label for="rate">Rental Rate: $</label>
-    <input type="number" min="0" step="0.01" name="rate">
+    <input type="number" min="0" max="1000" step="0.01" name="rate" required>
     <br>
     <label for="repCost">Replacement Cost: $</label>
-    <input type="number" min="0" step="0.01" name="repCost">
+    <input type="number" min="0" max="1000" step="0.01" name="repCost" required>
     <br>
     <div>
       <label for="rating">Film Rating:</label>

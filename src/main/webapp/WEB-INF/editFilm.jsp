@@ -21,18 +21,18 @@
     <input type="number" min="1800" max="2050" name="releaseYear" value="${film.releaseYear}">
     <br>
     <label for="length">Film Length:</label>
-    <input type="number" min="0" name="length" value="${film.length}">
+    <input type="number" min="0" max="1000" name="length" value="${film.length}">
     <label for="length">minutes</label>
     <br>
     <label for="rentDur">Rental Duration:</label>
-    <input type="number" min="0" name="rentDur" value="${film.rentDur}">
+    <input type="number" min="0" max="999" name="rentDur" value="${film.rentDur}">
     <label for="rentDur">days</label>
     <br>
     <label for="rate">Rental Rate: $</label>
-    <input type="number" name="rate" min="0" step="0.01" value="${film.rate}">
+    <input type="number" name="rate" min="0" max="1000" step="0.01" value="${film.rate}">
     <br>
     <label for="repCost">Replacement Cost: $</label>
-    <input type="number" name="repCost" min="0" step="0.01" value="${film.repCost}">
+    <input type="number" name="repCost" min="0" max="1000" step="0.01" value="${film.repCost}">
     <p>Current Film Rating: ${film.rating}</p>
     <div>
       <label for="rating">Edit Film Rating:</label>
