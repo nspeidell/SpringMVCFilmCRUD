@@ -6,7 +6,7 @@ allows a user to update or delete a film. Each page has a return to home option 
  fields.
 
 #Technology
-Git
+Git <br>
 HTML
 Java
 Spring
@@ -14,8 +14,8 @@ SQL
 
 # Lessons Learned
 This full-stack exercise challenged us to learn the flow of the information through the different 
-technologies, we felt pretty comfortable with the HTML to the controller and had familiarity with the 
-database querys and the DOA pattern, we had to work through the way the controller passed data to the .jsp files.
-Inside the controller we had to get the redirect from a .jsp file to a .jsp file which felt like th most complex
+technologies, we felt pretty comfortable with the HTML to the controller.  We also had familiarity with the 
+database querys and the DOA pattern but the way the controller passed data to the .jsp files required a lot of thought
+and testing. We had to redirect from a .jsp file to a .jsp file which felt like the most complex
 requirement for this project.  Finally, we had to troubleshoot the expression language syntax as it was very new to
 both of us.    
