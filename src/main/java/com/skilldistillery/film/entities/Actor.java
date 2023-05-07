@@ -86,6 +86,6 @@ public class Actor {
 
 	@Override
 	public String toString() {
-		return "Actor ID: " + id + ", Name: " + firstName + " " + lastName;
+		return firstName + " " + lastName;
 	}
 }

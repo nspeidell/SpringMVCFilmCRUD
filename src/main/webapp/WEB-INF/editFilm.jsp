@@ -9,6 +9,7 @@
 <title>Edit Film</title>
 </head>
 <body>
+	<p>Film ID: ${film.filmId}</p>
   <form action="SubmitEditFilm.do?filmId=${film.filmId}" method="POST">
     <label for="title">Title:</label>
     <input type="text" name="title" value="${film.title }">
@@ -28,24 +29,24 @@
     <label for="rentDur">days</label>
     <br>
     <label for="rate">Rental Rate: $</label>
-    <input type="number" name="rate" value="${film.rate}">
+    <input type="number" name="rate" min="0" step="0.01" value="${film.rate}">
     <br>
     <label for="repCost">Replacement Cost: $</label>
-    <input type="number" name="repCost" value="${film.repCost}">
-    <br>
-    <p>Film Rating: ${film.rating}</p>
+    <input type="number" name="repCost" min="0" step="0.01" value="${film.repCost}">
+    <p>Current Film Rating: ${film.rating}</p>
     <div>
       <label for="rating">Edit Film Rating:</label>
       <input type="radio" id="G" name="rating" value="G">
       <label for="G">G</label>
       <input type="radio" id="PG" name="rating" value="PG">
       <label for="PG">PG</label>
-      <input type="radio" id="PG-13" name="rating" value="PG-13">
-      <label for="PG-13">PG-13</label>
+      <input type="radio" id="PG13" name="rating" value="PG13">
+      <label for="PG13">PG13</label>
       <input type="radio" id="R" name="rating" value="R">
       <label for="R">R</label>
-      <input type="radio" id="NC-17" name="rating" value="NC-17">
-      <label for="NC-17">NC-17</label><br>
+      <input type="radio" id="NC17" name="rating" value="NC17">
+      <label for="NC17">NC17</label><br>
+      <br>
     </div>
     <input type="submit" value="Edit Film">
   </form>
